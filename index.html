@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WoW Expansion Guide</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="nav-placeholder"></div>
+
+    <main style="padding: 50px; text-align: center;">
+        <h1>Expansion Content</h1>
+        <p>This content changes based on the page you are on.</p>
+    </main>
+
+    <script>
+        async function initNav() {
+            try {
+                const response = await fetch('nav.html');
+                const html = await response.text();
+                document.getElementById('nav-placeholder').innerHTML = html;
+                
+                // Identify page and set active
+                const path = window.location.pathname;
+                const page = path.split("/").pop().replace(".html", "") || "index";
+                
+                const activeSeg = document.querySelector(`.nav-segment[data-link="${page}"]`);
+                if (activeSeg) {
+                    // Small timeout ensures the browser paints the nav before animating
+                    setTimeout(() => activeSeg.classList.add('active'), 50);
+                }
+            } catch (err) {
+                console.error("Failed to load navigation:", err);
+            }
+        }
+
+        initNav();
+    </script>
+</body>
+</html>
