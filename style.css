@@ -71,14 +71,19 @@ body {
 }
 
 .nav-full {
-    color: #000;
-    font-weight: 700;
-    font-size: 0.7rem;
-    text-transform: uppercase;
     opacity: 0;
     max-height: 0;
+    pointer-events: none; /* Prevents clicking ghost text */
+    white-space: nowrap;  /* Prevents the text from wrapping/stacking while hidden */
     overflow: hidden;
-    transition: 0.4s ease;
+}
+
+/* Only reveal when the active class is present */
+.active .nav-full {
+    opacity: 1;
+    max-height: 40px;
+    margin-top: 5px;
+    pointer-events: auto;
 }
 
 /* ACTIVE STATE */

@@ -16,26 +16,28 @@
 
     <script>
         async function initNav() {
-            try {
-                const response = await fetch('nav.html');
-                const html = await response.text();
-                document.getElementById('nav-placeholder').innerHTML = html;
-                
-                // Identify page and set active
-                const path = window.location.pathname;
-                const page = path.split("/").pop().replace(".html", "") || "index";
-                
-                const activeSeg = document.querySelector(`.nav-segment[data-link="${page}"]`);
-                if (activeSeg) {
-                    // Small timeout ensures the browser paints the nav before animating
-                    setTimeout(() => activeSeg.classList.add('active'), 50);
-                }
-            } catch (err) {
-                console.error("Failed to load navigation:", err);
+    try {
+        const response = await fetch('nav.html');
+        const html = await response.text();
+        document.getElementById('nav-placeholder').innerHTML = html;
+        
+        const path = window.location.pathname;
+        const page = path.split("/").pop().replace(".html", "") || "index";
+        
+        // NEUTRAL START LOGIC:
+        // We only add the 'active' class if the page is NOT the index/home page.
+        if (page !== "index") {
+            const activeSeg = document.querySelector(`.nav-segment[data-link="${page}"]`);
+            if (activeSeg) {
+                setTimeout(() => activeSeg.classList.add('active'), 50);
             }
         }
+    } catch (err) {
+        console.error("Failed to load navigation:", err);
+    }
+}
 
-        initNav();
+initNav();
     </script>
 </body>
 </html>
